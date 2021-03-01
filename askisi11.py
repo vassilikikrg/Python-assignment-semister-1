@@ -2,45 +2,49 @@ import json
 from collections import Counter
 
 filename="askisi11.txt"
+
+def find_max(d):
+    cnt=0
+    for k,v in d.items():
+        if v>cnt:
+            cnt=v
+    return cnt
+
+#function that finds all the keys of the dict and appends them in a list
+def find_keys(d,lst):
+    for k,v in d.items():
+        lst.append(k)
+
+        if type(v) is dict:
+            find_keys(v,lst)
+
+        if type(v) is list:
+            for ele in v:
+                if type(ele) is dict:
+                    find_keys(ele,lst)
+
+
+
 with open(filename, encoding="utf8") as file_object:
     contents = file_object.read()
     my_dict=json.loads(contents)
 
+
+
+
+
+
     keys=[]
-    #synarthsh pou pros8etei ka8e key sthn lista keys[] oses fores emfanizetai
-    def find_keys(d):
-        for k,v in d.items():
-            keys.append(k)
-            
+    x=find_keys(my_dict,keys)
 
-            if type(v) is dict:
-                find_keys(v)
-
-            if type(v) is list:
-                for ele in v:
-                    if type(ele) is dict:
-                        find_keys(ele)
-
-
-
-
-    x=find_keys(my_dict)
-    
-    #dhmioyrgia dictionary poy exei ws key to ka8e stoixeio ths keys[] kai ws value to plh8os emfanishs tou stoixeiou
+    #create dictionary that contains as keys the characters and as values their number of appearances
     dict_count=Counter(keys)
 
-    
-    def find_max(d):
-        cnt=0
-        for k,v in d.items():
-            if v>cnt:
-                cnt=v
-        return cnt
 
     y=find_max(dict_count)
+
     print("Το κλειδί/κλειδιά που εμφανίζεται/εμφανίζονται τις περισσότερες φορές ειναι:")
-    #ektypwnoume ta kleidia poy emfanizontai fores=max 
-    
+    #print the keys that appear most times
     for k,v in dict_count.items():
         if v==y:
             print(k)
