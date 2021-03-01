@@ -3,11 +3,11 @@ from collections import Counter
 filename='two_cities_ascii.txt'
 
 
-#sunarthsh gia na kovw string se xarakthres
+#function to cut strings into characters
 def split_char(wrd):
     return [char for char in word]
 
-#sunarthsh gia stroggulopoihsh pros ta panw
+#function to execute rounding upwards
 def round_up(num):
     if int(num)!=num:
         r=int(num+1)
@@ -19,7 +19,7 @@ with open(filename, encoding="utf8") as file_object:
 
     contents= file_object.read()
 
-    #afairw ari8mous kai shmeia stikshs
+    #remove numbers and punctuation
     char_remove=['0','1','2','3','4','5','6','7','8','9','.',',','!','[',']','(',')','-','{','}',';',':','''"''','<','>','/','?','@','#','$','%','^','&','*','_','~',"""'""",'’','“','‘']
     for charact in char_remove:
         contents=contents.replace(charact,' ')
@@ -30,21 +30,22 @@ with open(filename, encoding="utf8") as file_object:
     for word in words:
         all_chars.append(split_char(word))
 
-    #pros8hkh se kainoyrgia lista ka8e gramma me mono kwdiko ascii
-    lst_mono=[]
+    #add in a list the letters with odd ASCII code
+    lst_odd=[]
     for item in all_chars:
         for c in item:
             ascii_c=ord(c)
             if ascii_c%2==1:
-                lst_mono.append(c)
+                lst_odd.append(c)
 
-    num_mono=len(lst_mono)
+    length_odd=len(lst_odd)
 
-    #leksiko poy periexei ws kleidia xarakthres kai ws times to plh8os tous
-    dict_count=Counter(lst_mono)
+    #create dictionary that contains as keys the characters and as values their number of appearances
+    dict_count=Counter(lst_odd)
 
-    #briskw analogia ka8e grammatos sto keimeno
+    #find the ratio of each letter in text
     for k, v in dict_count.items():
-        quotient=(v/num_mono)*100
+        quotient=(v/length_odd)*100
         var1=round_up(quotient)
         print(k,":", var1*'*')
+
